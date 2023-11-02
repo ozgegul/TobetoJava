@@ -1,7 +1,5 @@
 package org.example.amicablePair;
 
-import java.util.Scanner;
-
 public class Main {
    public static void main(String[] args) {
    // Write a Java program finds first two amicable pairs. (Output: 1-> 220-284 2: 1184-1210)
