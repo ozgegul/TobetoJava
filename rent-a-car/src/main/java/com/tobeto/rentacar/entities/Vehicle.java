@@ -18,7 +18,7 @@ public class Vehicle
    private String model;
 
    @Column(name = "license_plate")
-   private String licensePlate;
+   private int licensePlate;
 
    @ManyToOne
    @JoinColumn(name="company_id")

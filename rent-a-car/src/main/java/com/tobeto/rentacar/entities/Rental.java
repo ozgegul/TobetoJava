@@ -2,6 +2,8 @@ package com.tobeto.rentacar.entities;
 
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Table(name = "rentals")
@@ -13,7 +15,7 @@ public class Rental {
     private int id;
 
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
