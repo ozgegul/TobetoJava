@@ -1,9 +1,13 @@
 package com.tobeto.rentacar.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Table(name = "payments")
 @Entity
+@Getter
+@Setter
 public class Payment {
     @Id
     @Column(name = "id")
