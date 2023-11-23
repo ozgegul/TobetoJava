@@ -1,51 +1,33 @@
 package com.tobeto.rentacar.controllers;
 
-import com.tobeto.rentacar.entities.Payment;
-import com.tobeto.rentacar.repositories.PaymentRepository;
+import com.tobeto.rentacar.services.abstracts.PaymentService;
+import com.tobeto.rentacar.services.dtos.payment.requests.AddPaymentRequest;
+import com.tobeto.rentacar.services.dtos.payment.requests.UpdatePaymentRequest;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("api/payments")
 public class PaymentsController {
 
-    private final PaymentRepository paymentRepository;
+    private final PaymentService paymentService;
 
-    public PaymentsController(PaymentRepository paymentRepository) {
-        this.paymentRepository = paymentRepository;
-    }
-
-    @GetMapping
-    public List<Payment> getAll(){
-        List<Payment> payments = paymentRepository.findAll();
-        return payments;
-    }
-
-    @GetMapping("{id}")
-    public Payment getById(@PathVariable int id){
-        return paymentRepository.findById(id).orElseThrow();
+    public PaymentsController(PaymentService paymentService) {
+        this.paymentService = paymentService;
     }
 
     @PostMapping
-    public void add(@RequestBody Payment payment){
-        paymentRepository.save(payment);
+    public void add(@RequestBody AddPaymentRequest addPaymentRequest){
+        paymentService.add(addPaymentRequest);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id) {
-        Payment paymentToDelete = paymentRepository.findById(id).orElseThrow();
-        paymentRepository.delete(paymentToDelete);
+        paymentService.delete(id);
     }
 
-    // update
     @PutMapping("{id}")
-    public void update(@PathVariable int id, @RequestBody Payment payment){
-        Payment paymentToUpdate = paymentRepository.findById(id).orElseThrow();
-        paymentToUpdate.setPaymentType(payment.getPaymentType());
-        paymentToUpdate.setCardNo(payment.getCardNo());
-        paymentToUpdate.setPrice(payment.getPrice());
-        paymentToUpdate.setCustomer(payment.getCustomer());
-        paymentRepository.save(paymentToUpdate);
+    public void update(@RequestBody UpdatePaymentRequest updatePaymentRequest){
+        paymentService.update(updatePaymentRequest);
     }
 }

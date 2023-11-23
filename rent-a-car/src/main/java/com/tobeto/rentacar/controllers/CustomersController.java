@@ -1,52 +1,32 @@
 package com.tobeto.rentacar.controllers;
 
-import com.tobeto.rentacar.entities.Customer;
-import com.tobeto.rentacar.repositories.CustomerRepository;
+import com.tobeto.rentacar.services.abstracts.CustomerService;
+import com.tobeto.rentacar.services.dtos.customer.requests.AddCustomerRequest;
+import com.tobeto.rentacar.services.dtos.customer.requests.UpdateCustomerRequest;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/customers")
 public class CustomersController {
 
-    private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
 
-    public CustomersController(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
-
-    @GetMapping
-    public List<Customer> getAll(){
-        List<Customer> customers = customerRepository.findAll();
-        return customers;
-    }
-
-    @GetMapping("{id}")
-    public Customer getById(@PathVariable int id){
-        return customerRepository.findById(id).orElseThrow();
+    public CustomersController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     @PostMapping
-    public void add(@RequestBody Customer customer){
-        customerRepository.save(customer);
+    public void add(@RequestBody AddCustomerRequest addCustomerRequest){
+        customerService.add(addCustomerRequest);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id){
-        Customer customerToDelete = customerRepository.findById(id).orElseThrow();
-        // Exception fırlatması = bu satırın çalışmaması.
-        customerRepository.delete(customerToDelete);
+        customerService.delete(id);
     }
 
-    // update
     @PutMapping("{id}")
-    public void update(@PathVariable int id, @RequestBody Customer customer){
-        Customer customerToUpdate = customerRepository.findById(id).orElseThrow();
-        customerToUpdate.setName(customer.getName());
-        customerToUpdate.setAddress(customer.getAddress());
-        customerToUpdate.setPayments(customer.getPayments());
-        customerToUpdate.setRentals(customer.getRentals());
-        customerRepository.save(customerToUpdate);
+    public void update(@RequestBody UpdateCustomerRequest updateCustomerRequest){
+        customerService.update(updateCustomerRequest);
     }
 }

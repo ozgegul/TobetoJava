@@ -1,50 +1,32 @@
 package com.tobeto.rentacar.controllers;
 
-import com.tobeto.rentacar.entities.Company;
-import com.tobeto.rentacar.repositories.CompanyRepository;
+import com.tobeto.rentacar.services.abstracts.CompanyService;
+import com.tobeto.rentacar.services.dtos.company.requests.AddCompanyRequest;
+import com.tobeto.rentacar.services.dtos.company.requests.UpdateCompanyRequest;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/companies")
 public class CompaniesController {
 
-    private final CompanyRepository companyRepository;
+    private final CompanyService companyService;
 
-    public CompaniesController(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
-    }
-
-    @GetMapping
-    public List<Company> getAll(){
-        List<Company> companies = companyRepository.findAll();
-        return companies;
-    }
-
-    @GetMapping("{id}")
-    public Company getById(@PathVariable int id){
-        return companyRepository.findById(id).orElseThrow();
+    public CompaniesController(CompanyService companyService) {
+        this.companyService = companyService;
     }
 
     @PostMapping
-    public void add(@RequestBody Company company){
-        companyRepository.save(company);
+    public void add(@RequestBody AddCompanyRequest addCompanyRequest){
+        companyService.add(addCompanyRequest);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id){
-        Company companyToDelete = companyRepository.findById(id).orElseThrow();
-        companyRepository.delete(companyToDelete);
+        companyService.delete(id);
     }
 
-    // update
     @PutMapping("{id}")
-    public void update(@PathVariable int id, @RequestBody Company company){
-        Company companyToUpdate = companyRepository.findById(id).orElseThrow();
-        companyToUpdate.setName(company.getName());
-        companyToUpdate.setEmail(company.getEmail());
-        companyToUpdate.setVehicles(company.getVehicles());
-        companyRepository.save(companyToUpdate);
+    public void update(@RequestBody UpdateCompanyRequest updateCompanyRequest){
+       companyService.update(updateCompanyRequest);
     }
 }

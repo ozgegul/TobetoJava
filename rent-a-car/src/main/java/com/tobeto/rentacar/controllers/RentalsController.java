@@ -1,50 +1,32 @@
 package com.tobeto.rentacar.controllers;
 
-import com.tobeto.rentacar.entities.Rental;
-import com.tobeto.rentacar.repositories.RentalRepository;
+import com.tobeto.rentacar.services.abstracts.RentalService;
+import com.tobeto.rentacar.services.dtos.rental.requests.AddRentalRequest;
+import com.tobeto.rentacar.services.dtos.rental.requests.UpdateRentalRequest;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/rentals")
 public class RentalsController {
 
-    private final RentalRepository rentalRepository;
+    private final RentalService rentalService;
 
-    public RentalsController(RentalRepository rentalRepository) {
-        this.rentalRepository = rentalRepository;
-    }
-
-    @GetMapping
-    public List<Rental> getAll(){
-        List<Rental> rentals = rentalRepository.findAll();
-        return rentals;
-    }
-
-    @GetMapping("{id}")
-    public Rental getById(@PathVariable int id){
-        return rentalRepository.findById(id).orElseThrow();
+    public RentalsController(RentalService rentalService) {
+        this.rentalService = rentalService;
     }
 
     @PostMapping
-    public void add(@RequestBody Rental rental){
-        rentalRepository.save(rental);
+    public void add(@RequestBody AddRentalRequest addRentalRequest){
+        rentalService.add(addRentalRequest);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id){
-        Rental rentalToDelete = rentalRepository.findById(id).orElseThrow();
-        rentalRepository.delete(rentalToDelete);
+        rentalService.delete(id);
     }
 
-    // update
     @PutMapping("{id}")
-    public void update(@PathVariable int id, @RequestBody Rental rental){
-        Rental rentalToUpdate = rentalRepository.findById(id).orElseThrow();
-        rentalToUpdate.setDate(rental.getDate());
-        rentalToUpdate.setCustomer(rental.getCustomer());
-        rentalToUpdate.setVehicle(rental.getVehicle());
-        rentalRepository.save(rentalToUpdate);
+    public void update(@RequestBody UpdateRentalRequest updateRentalRequest){
+        rentalService.update(updateRentalRequest);
     }
 }
