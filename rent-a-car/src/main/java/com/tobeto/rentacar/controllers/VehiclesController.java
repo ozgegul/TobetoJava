@@ -1,5 +1,6 @@
 package com.tobeto.rentacar.controllers;
 
+import com.tobeto.rentacar.entities.Vehicle;
 import com.tobeto.rentacar.services.abstracts.VehicleService;
 import com.tobeto.rentacar.services.dtos.vehicle.requests.AddVehicleRequest;
 import com.tobeto.rentacar.services.dtos.vehicle.requests.UpdateVehicleRequest;
@@ -27,5 +28,10 @@ public class VehiclesController {
     @PutMapping("{id}")
     public void update(@RequestBody UpdateVehicleRequest updateVehicleRequest){
         vehicleService.update(updateVehicleRequest);
+    }
+
+    @GetMapping
+    public Vehicle findByModelLike(@RequestParam String model){
+        return vehicleService.findByModelLike(model);
     }
 }

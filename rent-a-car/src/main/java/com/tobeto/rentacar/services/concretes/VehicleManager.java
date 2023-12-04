@@ -34,4 +34,9 @@ public class VehicleManager implements VehicleService {
         Vehicle vehicleToDelete = vehicleRepository.findById(id).orElseThrow();
         vehicleRepository.delete(vehicleToDelete);
     }
+
+    @Override
+    public Vehicle findByModelLike(String model){
+        return vehicleRepository.findByModelLike(model);
+    }
 }

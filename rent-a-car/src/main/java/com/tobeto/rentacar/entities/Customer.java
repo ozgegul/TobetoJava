@@ -20,6 +20,9 @@ public class Customer {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "age")
+    private int age;
+
     @Column(name = "address")
     private String address;
 

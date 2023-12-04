@@ -5,7 +5,10 @@ import com.tobeto.rentacar.repositories.CompanyRepository;
 import com.tobeto.rentacar.services.abstracts.CompanyService;
 import com.tobeto.rentacar.services.dtos.company.requests.AddCompanyRequest;
 import com.tobeto.rentacar.services.dtos.company.requests.UpdateCompanyRequest;
+import com.tobeto.rentacar.services.dtos.company.responses.GetListCompanyResponse;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CompanyManager implements CompanyService {
@@ -33,5 +36,20 @@ public class CompanyManager implements CompanyService {
     public void delete(int id){
         Company companyToDelete = companyRepository.findById(id).orElseThrow();
         companyRepository.delete(companyToDelete);
+    }
+
+    @Override
+    public List<Company> getByName(String name) {
+        return companyRepository.findByNameStartingWith(name);
+    }
+
+    @Override
+    public List<Company> getById(String name) {
+        return null;
+    }
+
+    @Override
+    public List<GetListCompanyResponse> getByNameDto(String name) {
+        return companyRepository.findByName(name);
     }
 }

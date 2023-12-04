@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 // Generic Type, Reference Type olarak belirtilmelidir.
 public interface VehicleRepository extends JpaRepository<Vehicle, Integer>
 {
-
+    Vehicle findByModelLike(String model);
 }

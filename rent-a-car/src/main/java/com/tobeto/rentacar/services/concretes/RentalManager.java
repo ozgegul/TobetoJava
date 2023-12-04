@@ -5,7 +5,10 @@ import com.tobeto.rentacar.repositories.RentalRepository;
 import com.tobeto.rentacar.services.abstracts.RentalService;
 import com.tobeto.rentacar.services.dtos.rental.requests.AddRentalRequest;
 import com.tobeto.rentacar.services.dtos.rental.requests.UpdateRentalRequest;
+import com.tobeto.rentacar.services.dtos.rental.responses.GetListRentalResponse;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RentalManager implements RentalService {
@@ -33,5 +36,15 @@ public class RentalManager implements RentalService {
     public void delete(int id){
         Rental rentalToDelete = rentalRepository.findById(id).orElseThrow();
         rentalRepository.delete(rentalToDelete);
+    }
+
+    @Override
+    public List<GetListRentalResponse> findByIdentity(int id){
+        return rentalRepository.findByIdentity(id);
+    }
+
+    @Override
+    public List<GetListRentalResponse> findAllByOrderByIdDesc(){
+        return rentalRepository.findAllByOrderByIdDesc();
     }
 }
