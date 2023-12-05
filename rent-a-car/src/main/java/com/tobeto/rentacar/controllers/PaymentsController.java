@@ -4,6 +4,7 @@ import com.tobeto.rentacar.services.abstracts.PaymentService;
 import com.tobeto.rentacar.services.dtos.payment.requests.AddPaymentRequest;
 import com.tobeto.rentacar.services.dtos.payment.requests.UpdatePaymentRequest;
 import com.tobeto.rentacar.services.dtos.payment.responses.GetListPaymentResponse;
+import com.tobeto.rentacar.services.dtos.payment.responses.GetPaymentTypeResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class PaymentsController {
     }
 
     @GetMapping
-    public List<GetListPaymentResponse> findByPaymentTypeStartingWith(@RequestParam String paymentType){
+    public GetPaymentTypeResponse findByPaymentTypeStartingWith(@RequestParam String paymentType){
         return paymentService.findByPaymentTypeStartingWith(paymentType);
     }
 }

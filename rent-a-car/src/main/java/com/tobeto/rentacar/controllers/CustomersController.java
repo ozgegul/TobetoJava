@@ -40,7 +40,7 @@ public class CustomersController {
     }
 
     @GetMapping("dto")
-    public List<GetListCustomerResponse> findCustomerByAge(){
-        return customerService.findCustomerByAge();
+    public List<GetListCustomerResponse> findCustomerByAge(@RequestParam int age){
+        return customerService.findCustomerByAge(age);
     }
 }

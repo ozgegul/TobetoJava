@@ -6,6 +6,7 @@ import com.tobeto.rentacar.services.abstracts.PaymentService;
 import com.tobeto.rentacar.services.dtos.payment.requests.AddPaymentRequest;
 import com.tobeto.rentacar.services.dtos.payment.requests.UpdatePaymentRequest;
 import com.tobeto.rentacar.services.dtos.payment.responses.GetListPaymentResponse;
+import com.tobeto.rentacar.services.dtos.payment.responses.GetPaymentTypeResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,7 +45,10 @@ public class PaymentManager implements PaymentService {
     }
 
     @Override
-    public List<GetListPaymentResponse> findByPaymentTypeStartingWith(String paymentType) {
-        return paymentRepository.findByPaymentTypeStartingWith(paymentType);
+    public GetPaymentTypeResponse findByPaymentTypeStartingWith(String paymentType) {
+        return (GetPaymentTypeResponse) paymentRepository.findAll().stream().
+                filter(payment -> payment.getPaymentType().contains(paymentType))
+                .map(payment -> new GetPaymentTypeResponse(payment.getPaymentType())).toList();
+        // return paymentRepository.findByPaymentTypeStartingWith(paymentType);
     }
 }

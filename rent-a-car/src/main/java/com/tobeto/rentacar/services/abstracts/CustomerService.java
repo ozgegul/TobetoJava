@@ -14,5 +14,5 @@ public interface CustomerService {
 
     List<Customer> getByAge();
 
-    List<GetListCustomerResponse> findCustomerByAge();
+    List<GetListCustomerResponse> findCustomerByAge(int age);
 }

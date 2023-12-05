@@ -40,7 +40,10 @@ public class RentalManager implements RentalService {
 
     @Override
     public List<GetListRentalResponse> findByIdentity(int id){
-        return rentalRepository.findByIdentity(id);
+        return rentalRepository.findByIdentity(id)
+                .stream()
+                .map((Rental) -> new GetListRentalResponse(Rental.getId(), Rental.getDate())).toList();
+        // return rentalRepository.findByIdentity(id);
     }
 
     @Override

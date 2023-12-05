@@ -50,6 +50,8 @@ public class CompanyManager implements CompanyService {
 
     @Override
     public List<GetListCompanyResponse> getByNameDto(String name) {
-        return companyRepository.findByName(name);
+        return companyRepository.findByNameStartingWith(name).stream().map(company ->
+                new GetListCompanyResponse(company.getId(), company.getName())).toList();
+        // return companyRepository.findByName(name);
     }
 }

@@ -2,6 +2,7 @@ package com.tobeto.rentacar.repositories;
 
 import com.tobeto.rentacar.entities.Payment;
 import com.tobeto.rentacar.services.dtos.payment.responses.GetListPaymentResponse;
+import com.tobeto.rentacar.services.dtos.payment.responses.GetPaymentTypeResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,5 +14,5 @@ public interface PaymentRepository extends JpaRepository<Payment, Integer>
             + "FROM Payment p WHERE p.price > 500")
     List<GetListPaymentResponse> findPaymentByPrice();
 
-    List<GetListPaymentResponse> findByPaymentTypeStartingWith(String paymentType);
+    GetPaymentTypeResponse findByPaymentTypeStartingWith(String paymentType);
 }

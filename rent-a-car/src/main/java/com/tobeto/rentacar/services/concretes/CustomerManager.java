@@ -44,8 +44,10 @@ public class CustomerManager implements CustomerService {
     }
 
     @Override
-    public List<GetListCustomerResponse> findCustomerByAge() {
-        return customerRepository.findCustomerByAge();
+    public List<GetListCustomerResponse> findCustomerByAge(int age) {
+        return customerRepository.findCustomerByAge(age).stream().map((customer) ->
+                new GetListCustomerResponse()).toList();
+        //return customerRepository.findCustomerByAge();
     }
 
 }
