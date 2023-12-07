@@ -4,6 +4,7 @@ import com.tobeto.rentacar.entities.Vehicle;
 import com.tobeto.rentacar.services.abstracts.VehicleService;
 import com.tobeto.rentacar.services.dtos.vehicle.requests.AddVehicleRequest;
 import com.tobeto.rentacar.services.dtos.vehicle.requests.UpdateVehicleRequest;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +17,7 @@ public class VehiclesController {
     }
 
     @PostMapping
-    public void add(@RequestBody AddVehicleRequest addVehicleRequest){
+    public void add(@RequestBody @Valid AddVehicleRequest addVehicleRequest){
         vehicleService.add(addVehicleRequest);
     }
 
@@ -26,7 +27,7 @@ public class VehiclesController {
     }
 
     @PutMapping("{id}")
-    public void update(@RequestBody UpdateVehicleRequest updateVehicleRequest){
+    public void update(@RequestBody @Valid UpdateVehicleRequest updateVehicleRequest){
         vehicleService.update(updateVehicleRequest);
     }
 

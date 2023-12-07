@@ -5,6 +5,7 @@ import com.tobeto.rentacar.services.dtos.payment.requests.AddPaymentRequest;
 import com.tobeto.rentacar.services.dtos.payment.requests.UpdatePaymentRequest;
 import com.tobeto.rentacar.services.dtos.payment.responses.GetListPaymentResponse;
 import com.tobeto.rentacar.services.dtos.payment.responses.GetPaymentTypeResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class PaymentsController {
     }
 
     @PostMapping
-    public void add(@RequestBody AddPaymentRequest addPaymentRequest){
+    public void add(@RequestBody @Valid AddPaymentRequest addPaymentRequest){
         paymentService.add(addPaymentRequest);
     }
 
@@ -31,7 +32,7 @@ public class PaymentsController {
     }
 
     @PutMapping("{id}")
-    public void update(@RequestBody UpdatePaymentRequest updatePaymentRequest){
+    public void update(@RequestBody @Valid UpdatePaymentRequest updatePaymentRequest){
         paymentService.update(updatePaymentRequest);
     }
 

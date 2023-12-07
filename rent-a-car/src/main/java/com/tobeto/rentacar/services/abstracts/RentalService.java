@@ -11,7 +11,7 @@ public interface RentalService {
     void update(UpdateRentalRequest updateRentalRequest);
     void delete(int id);
 
-    List<GetListRentalResponse> findByIdentity(int id);
+    List<GetListRentalResponse> findById(int id);
 
     List<GetListRentalResponse> findAllByOrderByIdDesc();
 }

@@ -5,6 +5,7 @@ import com.tobeto.rentacar.services.abstracts.CompanyService;
 import com.tobeto.rentacar.services.dtos.company.requests.AddCompanyRequest;
 import com.tobeto.rentacar.services.dtos.company.requests.UpdateCompanyRequest;
 import com.tobeto.rentacar.services.dtos.company.responses.GetListCompanyResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class CompaniesController {
     }
 
     @PostMapping
-    public void add(@RequestBody AddCompanyRequest addCompanyRequest){
+    public void add(@RequestBody @Valid AddCompanyRequest addCompanyRequest){
         companyService.add(addCompanyRequest);
     }
 
@@ -30,7 +31,7 @@ public class CompaniesController {
     }
 
     @PutMapping("{id}")
-    public void update(@RequestBody UpdateCompanyRequest updateCompanyRequest){
+    public void update(@RequestBody @Valid UpdateCompanyRequest updateCompanyRequest){
        companyService.update(updateCompanyRequest);
     }
 

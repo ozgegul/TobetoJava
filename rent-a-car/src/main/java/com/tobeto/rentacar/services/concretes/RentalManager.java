@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 public class RentalManager implements RentalService {
     private final RentalRepository rentalRepository;
+    private final String errorMessage = "Invalid id";
 
     public RentalManager(RentalRepository rentalRepository) {
         this.rentalRepository = rentalRepository;
@@ -27,6 +28,9 @@ public class RentalManager implements RentalService {
 
     @Override
     public void update(UpdateRentalRequest updateRentalRequest){
+        if(rentalRepository.existsById(updateRentalRequest.getId())){
+            throw new RuntimeException(errorMessage);
+        }
         Rental rentalToUpdate = rentalRepository.findById(updateRentalRequest.getId()).orElseThrow();
         rentalToUpdate.setDate(updateRentalRequest.getDate());
         rentalRepository.save(rentalToUpdate);
@@ -34,13 +38,16 @@ public class RentalManager implements RentalService {
 
     @Override
     public void delete(int id){
+        if(rentalRepository.existsById(id)){
+            throw new RuntimeException(errorMessage);
+        }
         Rental rentalToDelete = rentalRepository.findById(id).orElseThrow();
         rentalRepository.delete(rentalToDelete);
     }
 
     @Override
-    public List<GetListRentalResponse> findByIdentity(int id){
-        return rentalRepository.findByIdentity(id)
+    public List<GetListRentalResponse> findById(int id){
+        return rentalRepository.findById(id)
                 .stream()
                 .map((Rental) -> new GetListRentalResponse(Rental.getId(), Rental.getDate())).toList();
         // return rentalRepository.findByIdentity(id);

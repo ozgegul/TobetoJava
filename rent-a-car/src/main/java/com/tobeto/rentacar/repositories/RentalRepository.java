@@ -11,7 +11,8 @@ public interface RentalRepository extends JpaRepository<Rental, Integer>
 {
     @Query("SELECT new com.tobeto.rentacar.services.dtos.rental.responses.GetListRentalResponse(r.id, r.date)"
             + "FROM Rental r WHERE r.id = :id")
-    List<GetListRentalResponse> findByIdentity(int id);
+    List<GetListRentalResponse>findById(int id);
+    List<GetListRentalResponse>findAllByOrderByIdDesc();
 
-    List<GetListRentalResponse> findAllByOrderByIdDesc();
+    boolean existsById(int id);
 }

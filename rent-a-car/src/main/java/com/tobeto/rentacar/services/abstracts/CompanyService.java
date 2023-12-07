@@ -14,7 +14,7 @@ public interface CompanyService {
 
     List<Company> getByName(String name);
 
-    List<Company> getById(String name);
+    List<Company> getById(int id);
 
     List<GetListCompanyResponse> getByNameDto(String name);
 }

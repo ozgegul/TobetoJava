@@ -4,6 +4,7 @@ import com.tobeto.rentacar.services.abstracts.RentalService;
 import com.tobeto.rentacar.services.dtos.rental.requests.AddRentalRequest;
 import com.tobeto.rentacar.services.dtos.rental.requests.UpdateRentalRequest;
 import com.tobeto.rentacar.services.dtos.rental.responses.GetListRentalResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class RentalsController {
     }
 
     @PostMapping
-    public void add(@RequestBody AddRentalRequest addRentalRequest){
+    public void add(@RequestBody @Valid AddRentalRequest addRentalRequest){
         rentalService.add(addRentalRequest);
     }
 
@@ -29,14 +30,14 @@ public class RentalsController {
     }
 
     @PutMapping("{id}")
-    public void update(@RequestBody UpdateRentalRequest updateRentalRequest){
+    public void update(@RequestBody @Valid UpdateRentalRequest updateRentalRequest){
         rentalService.update(updateRentalRequest);
     }
 
     @GetMapping("dto")
-    public List<GetListRentalResponse> findByIdentity(@RequestParam int id){
+    public List<GetListRentalResponse>findById(@RequestParam int id){
 
-        return rentalService.findByIdentity(id);
+        return rentalService.findById(id);
     }
 
     @GetMapping

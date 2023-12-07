@@ -12,6 +12,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer>
     @Query("SELECT new com.tobeto.rentacar.services.dtos.customer.responses.GetListCustomerResponse(c.id, c.name, c.age)"
             + "FROM Customer c WHERE c.age > :age")
     List<GetListCustomerResponse> findCustomerByAge(int age);
-
     List<Customer> findByAgeIsNull();
+
+    //boolean existsCustomerByAge(int age);
 }

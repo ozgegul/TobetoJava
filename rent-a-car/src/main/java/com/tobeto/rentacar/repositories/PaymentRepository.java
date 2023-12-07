@@ -13,6 +13,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Integer>
     @Query("SELECT new com.tobeto.rentacar.services.dtos.payment.responses.GetListPaymentResponse(p.id,p.price,p.paymentType)"
             + "FROM Payment p WHERE p.price > 500")
     List<GetListPaymentResponse> findPaymentByPrice();
-
     GetPaymentTypeResponse findByPaymentTypeStartingWith(String paymentType);
+
+    boolean existsByPaymentTypeStartingWith(String paymentType);
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class VehicleManager implements VehicleService {
     private final VehicleRepository vehicleRepository;
+    private final String errorMessage = "Invalid id";
 
     public VehicleManager(VehicleRepository vehicleRepository) {
         this.vehicleRepository = vehicleRepository;
@@ -17,6 +18,9 @@ public class VehicleManager implements VehicleService {
 
     @Override
     public void add(AddVehicleRequest addVehicleRequest){
+        if(vehicleRepository.existsByModelLike(addVehicleRequest.getModel())){
+            throw new RuntimeException("Invalid model");
+        }
         Vehicle vehicle = new Vehicle();
         vehicle.setModel(addVehicleRequest.getModel());
         vehicleRepository.save(vehicle);
@@ -24,6 +28,9 @@ public class VehicleManager implements VehicleService {
 
     @Override
     public void update(UpdateVehicleRequest updateVehicleRequest){
+        if(!vehicleRepository.existsById(updateVehicleRequest.getId())){
+            throw new RuntimeException(errorMessage);
+        }
         Vehicle vehicleToUpdate = vehicleRepository.findById(updateVehicleRequest.getId()).orElseThrow();
         vehicleToUpdate.setModel(updateVehicleRequest.getModel());
         vehicleRepository.save(vehicleToUpdate);
@@ -31,6 +38,9 @@ public class VehicleManager implements VehicleService {
 
     @Override
     public void delete(int id){
+        if(vehicleRepository.existsById(id)){
+            throw new RuntimeException(errorMessage);
+        }
         Vehicle vehicleToDelete = vehicleRepository.findById(id).orElseThrow();
         vehicleRepository.delete(vehicleToDelete);
     }

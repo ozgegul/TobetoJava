@@ -13,4 +13,7 @@ public interface CompanyRepository extends JpaRepository<Company, Integer>
     @Query("Select new com.tobeto.rentacar.services.dtos.company.responses.GetListCompanyResponse(b.name)"
             + "FROM Company b WHERE b.name = :name")
     List<GetListCompanyResponse> findByName(String name);
+
+    boolean existsByNameStartingWith(String name);
+    boolean existsByName(String name);
 }

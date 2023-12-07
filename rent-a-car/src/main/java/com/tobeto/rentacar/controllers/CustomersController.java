@@ -5,6 +5,7 @@ import com.tobeto.rentacar.services.abstracts.CustomerService;
 import com.tobeto.rentacar.services.dtos.customer.requests.AddCustomerRequest;
 import com.tobeto.rentacar.services.dtos.customer.requests.UpdateCustomerRequest;
 import com.tobeto.rentacar.services.dtos.customer.responses.GetListCustomerResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class CustomersController {
     }
 
     @PostMapping
-    public void add(@RequestBody AddCustomerRequest addCustomerRequest){
+    public void add(@RequestBody @Valid AddCustomerRequest addCustomerRequest){
         customerService.add(addCustomerRequest);
     }
 
@@ -30,7 +31,7 @@ public class CustomersController {
     }
 
     @PutMapping("{id}")
-    public void update(@RequestBody UpdateCustomerRequest updateCustomerRequest){
+    public void update(@RequestBody @Valid UpdateCustomerRequest updateCustomerRequest){
         customerService.update(updateCustomerRequest);
     }
 

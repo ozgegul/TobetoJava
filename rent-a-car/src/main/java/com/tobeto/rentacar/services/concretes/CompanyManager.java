@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 public class CompanyManager implements CompanyService {
     private final CompanyRepository companyRepository;
+    private final String errorMessage = "There is a company with the same name";
 
     public CompanyManager(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
@@ -20,6 +21,9 @@ public class CompanyManager implements CompanyService {
 
     @Override
     public void add(AddCompanyRequest addCompanyRequest){
+        if (companyRepository.existsByName(addCompanyRequest.getName())){
+            throw new RuntimeException(errorMessage);
+        }
         Company company = new Company();
         company.setName(addCompanyRequest.getName());
         companyRepository.save(company);
@@ -27,6 +31,12 @@ public class CompanyManager implements CompanyService {
 
     @Override
     public void update(UpdateCompanyRequest updateCompanyRequest){
+        if(!companyRepository.existsById(updateCompanyRequest.getId())){
+            throw new RuntimeException("Invalid id");
+        }
+        if(companyRepository.existsByName(updateCompanyRequest.getName())){
+            throw new RuntimeException(errorMessage);
+        }
         Company companyToUpdate = companyRepository.findById(updateCompanyRequest.getId()).orElseThrow();
         companyToUpdate.setName(updateCompanyRequest.getName());
         companyRepository.save(companyToUpdate);
@@ -34,6 +44,9 @@ public class CompanyManager implements CompanyService {
 
     @Override
     public void delete(int id){
+        if(companyRepository.existsById(id)){
+            throw new RuntimeException("Invalid id");
+        }
         Company companyToDelete = companyRepository.findById(id).orElseThrow();
         companyRepository.delete(companyToDelete);
     }
@@ -44,7 +57,7 @@ public class CompanyManager implements CompanyService {
     }
 
     @Override
-    public List<Company> getById(String name) {
+    public List<Company> getById(int id) {
         return null;
     }
 

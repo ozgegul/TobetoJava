@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 public class CustomerManager implements CustomerService {
     private final CustomerRepository customerRepository;
+    private final String errorMessage = "Invalid id";
 
     public CustomerManager(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -27,6 +28,9 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public void update(UpdateCustomerRequest updateCustomerRequest){
+        if(!customerRepository.existsById(updateCustomerRequest.getId())){
+            throw new RuntimeException(errorMessage);
+        }
         Customer customerToUpdate = customerRepository.findById(updateCustomerRequest.getId()).orElseThrow();
         customerToUpdate.setName(updateCustomerRequest.getName());
         customerRepository.save(customerToUpdate);
@@ -34,6 +38,9 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public void delete(int id){
+        if(customerRepository.existsById(id)){
+            throw new RuntimeException(errorMessage);
+        }
         Customer customerToDelete = customerRepository.findById(id).orElseThrow();
         customerRepository.delete(customerToDelete);
     }
