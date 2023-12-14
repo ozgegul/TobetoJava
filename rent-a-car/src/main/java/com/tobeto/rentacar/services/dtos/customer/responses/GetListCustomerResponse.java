@@ -1,5 +1,7 @@
 package com.tobeto.rentacar.services.dtos.customer.responses;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -8,7 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetListCustomerResponse {
+    @NotNull(message = "Id cannot be null.")
     private int id;
+    @NotEmpty(message = "Name cannot be empty.")
     private String name;
+    private String address;
+    @NotNull(message = "Age cannot be empty.")
     private int age;
 }

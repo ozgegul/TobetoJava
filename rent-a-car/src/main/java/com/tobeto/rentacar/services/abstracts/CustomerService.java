@@ -12,7 +12,6 @@ public interface CustomerService {
     void update(UpdateCustomerRequest updateCustomerRequest);
     void delete(int id);
 
-    List<Customer> getByAge();
-
+    List<Customer> getByAgeIsNull();
     List<GetListCustomerResponse> findCustomerByAge(int age);
 }

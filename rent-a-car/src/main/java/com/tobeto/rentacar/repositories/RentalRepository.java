@@ -5,14 +5,22 @@ import com.tobeto.rentacar.services.dtos.rental.responses.GetListRentalResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface RentalRepository extends JpaRepository<Rental, Integer>
 {
-    @Query("SELECT new com.tobeto.rentacar.services.dtos.rental.responses.GetListRentalResponse(r.id, r.date)"
-            + "FROM Rental r WHERE r.id = :id")
-    List<GetListRentalResponse>findById(int id);
-    List<GetListRentalResponse>findAllByOrderByIdDesc();
+    List<Rental> findByOrderByCustomerDesc();
 
-    boolean existsById(int id);
+    @Query("SELECT r FROM Rental r Where r.date = :date")
+    Rental findByDate(LocalDate date);
+
+    @Query("SELECT new com.tobeto.rentacar.services.dtos.rental.responses.GetListRentalResponse" +
+            "(r.id, r.date, new com.tobeto.rentacar.services.dtos.customer.responses.GetListCustomerResponse(c.id, c.name), " +
+            " new com.tobeto.rentacar.services.dtos.vehicle.responses.GetListVehicleResponse(v.id, v.model)) " +
+            "FROM Rental r " +
+            "INNER JOIN r.customer c " +
+            "INNER JOIN r.vehicle v " +
+            "WHERE c.name = :customer AND v.model = :vehicle")
+    List<GetListRentalResponse> findByCustomerNameAndVehicleModel(String customer, String vehicle);
 }

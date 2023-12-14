@@ -13,6 +13,5 @@ public interface PaymentService {
     void delete(int id);
 
     List<GetListPaymentResponse> findPaymentByPrice();
-
     GetPaymentTypeResponse findByPaymentTypeStartingWith(String paymentType);
 }

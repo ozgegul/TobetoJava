@@ -15,5 +15,5 @@ public interface PaymentRepository extends JpaRepository<Payment, Integer>
     List<GetListPaymentResponse> findPaymentByPrice();
     GetPaymentTypeResponse findByPaymentTypeStartingWith(String paymentType);
 
-    boolean existsByPaymentTypeStartingWith(String paymentType);
+    boolean existsPaymentByPrice(int price);
 }

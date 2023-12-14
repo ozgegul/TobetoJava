@@ -6,41 +6,39 @@ import com.tobeto.rentacar.services.dtos.customer.requests.AddCustomerRequest;
 import com.tobeto.rentacar.services.dtos.customer.requests.UpdateCustomerRequest;
 import com.tobeto.rentacar.services.dtos.customer.responses.GetListCustomerResponse;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/customers")
+@AllArgsConstructor
 public class CustomersController {
 
     private final CustomerService customerService;
 
-    public CustomersController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
-    @PostMapping
+    @PostMapping("/add")
     public void add(@RequestBody @Valid AddCustomerRequest addCustomerRequest){
         customerService.add(addCustomerRequest);
     }
 
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable int id){
-        customerService.delete(id);
-    }
-
-    @PutMapping("{id}")
+    @PutMapping("/update")
     public void update(@RequestBody @Valid UpdateCustomerRequest updateCustomerRequest){
         customerService.update(updateCustomerRequest);
     }
 
-    @GetMapping
-    public List<Customer> getByAge(){
-        return customerService.getByAge();
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable int id){
+        customerService.delete(id);
     }
 
-    @GetMapping("dto")
+    @GetMapping("/getByAgeIsNull")
+    public List<Customer> getByAgeIsNull(){
+        return customerService.getByAgeIsNull();
+    }
+
+    @GetMapping("/findCustomerByAge")
     public List<GetListCustomerResponse> findCustomerByAge(@RequestParam int age){
         return customerService.findCustomerByAge(age);
     }
