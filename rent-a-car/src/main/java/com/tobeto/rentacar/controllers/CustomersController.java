@@ -4,6 +4,7 @@ import com.tobeto.rentacar.entities.Customer;
 import com.tobeto.rentacar.services.abstracts.CustomerService;
 import com.tobeto.rentacar.services.dtos.customer.requests.AddCustomerRequest;
 import com.tobeto.rentacar.services.dtos.customer.requests.UpdateCustomerRequest;
+import com.tobeto.rentacar.services.dtos.customer.responses.GetByIdCustomerResponse;
 import com.tobeto.rentacar.services.dtos.customer.responses.GetListCustomerResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -41,5 +42,10 @@ public class CustomersController {
     @GetMapping("/findCustomerByAge")
     public List<GetListCustomerResponse> findCustomerByAge(@RequestParam int age){
         return customerService.findCustomerByAge(age);
+    }
+
+    @GetMapping("/getById")
+    public GetByIdCustomerResponse getById(@RequestParam int id){
+        return customerService.getById(id);
     }
 }

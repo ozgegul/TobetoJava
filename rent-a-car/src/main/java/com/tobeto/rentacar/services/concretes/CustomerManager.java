@@ -1,10 +1,12 @@
 package com.tobeto.rentacar.services.concretes;
 
+import com.tobeto.rentacar.core.utilities.mappers.ModelMapperService;
 import com.tobeto.rentacar.entities.Customer;
 import com.tobeto.rentacar.repositories.CustomerRepository;
 import com.tobeto.rentacar.services.abstracts.CustomerService;
 import com.tobeto.rentacar.services.dtos.customer.requests.AddCustomerRequest;
 import com.tobeto.rentacar.services.dtos.customer.requests.UpdateCustomerRequest;
+import com.tobeto.rentacar.services.dtos.customer.responses.GetByIdCustomerResponse;
 import com.tobeto.rentacar.services.dtos.customer.responses.GetListCustomerResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CustomerManager implements CustomerService {
     private final CustomerRepository customerRepository;
+    private final ModelMapperService modelMapperService;
 
     @Override
     public void add(AddCustomerRequest addCustomerRequest){
@@ -45,6 +48,20 @@ public class CustomerManager implements CustomerService {
         }
         Customer customerToDelete = customerRepository.findById(id).orElseThrow();
         customerRepository.delete(customerToDelete);
+    }
+
+    @Override
+    public GetByIdCustomerResponse getById(int id) {
+        Customer customer = customerRepository.findById(id).orElseThrow();
+        GetByIdCustomerResponse response = this.modelMapperService.forResponse().map(customer, GetByIdCustomerResponse.class);
+        return response;
+    }
+
+    @Override
+    public GetByIdCustomerResponse getByEmail(String email){
+        Customer customer = customerRepository.findByEmail(email).orElseThrow();
+        GetByIdCustomerResponse response = this.modelMapperService.forResponse().map(customer, GetByIdCustomerResponse.class);
+        return response;
     }
 
     @Override
