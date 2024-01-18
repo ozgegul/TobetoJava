@@ -1,6 +1,7 @@
 package com.tobeto.rentacar.config;
 
 import com.tobeto.rentacar.repositories.CustomerRepository;
+import com.tobeto.rentacar.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private final CustomerRepository repository;
+    private final UserRepository repository;
 
     @Bean
     public UserDetailsService userDetailsService(){

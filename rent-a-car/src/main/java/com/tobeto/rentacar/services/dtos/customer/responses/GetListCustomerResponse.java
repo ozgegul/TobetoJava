@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 public class GetListCustomerResponse {
     @NotNull(message = "Id cannot be null.")
     private int id;
-    @NotEmpty(message = "Name cannot be empty.")
-    private String name;
     private String address;
     @NotNull(message = "Age cannot be empty.")
     private int age;

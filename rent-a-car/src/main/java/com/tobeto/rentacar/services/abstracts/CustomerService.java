@@ -14,7 +14,6 @@ public interface CustomerService {
     void delete(int id);
 
     GetByIdCustomerResponse getById(int id);
-    GetByIdCustomerResponse getByEmail(String email);
     List<Customer> getByAgeIsNull();
     List<GetListCustomerResponse> findCustomerByAge(int age);
 }

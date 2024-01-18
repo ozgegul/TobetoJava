@@ -58,13 +58,6 @@ public class CustomerManager implements CustomerService {
     }
 
     @Override
-    public GetByIdCustomerResponse getByEmail(String email){
-        Customer customer = customerRepository.findByEmail(email).orElseThrow();
-        GetByIdCustomerResponse response = this.modelMapperService.forResponse().map(customer, GetByIdCustomerResponse.class);
-        return response;
-    }
-
-    @Override
     public List<Customer> getByAgeIsNull() {
         return customerRepository.findByAgeIsNull();
     }
